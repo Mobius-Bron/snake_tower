@@ -32,15 +32,9 @@ func _on_timer_timeout():
 	
 	if target_enemy:
 		tower.look_at(target_enemy.global_position)
-		var new_bullet1 = bullet.instantiate()
-		new_bullet1.global_position = $tower/tower/aim1.global_position
-		new_bullet1.target = target_enemy
-		var new_bullet2 = bullet.instantiate()
-		new_bullet2.global_position = $tower/tower/aim2.global_position
-		new_bullet2.target = target_enemy
-		var new_bullet3 = bullet.instantiate()
-		new_bullet3.global_position = $tower/tower/aim3.global_position
-		new_bullet3.target = target_enemy
-		get_tree().get_root().add_child(new_bullet1)
-		get_tree().get_root().add_child(new_bullet2)
-		get_tree().get_root().add_child(new_bullet3)
+		var new_bullet = bullet.instantiate()
+		new_bullet.global_position = $tower/tower/aim.global_position
+		new_bullet.target = target_enemy
+		new_bullet.speed = 500
+		new_bullet.atk = 20
+		get_tree().get_root().add_child(new_bullet)

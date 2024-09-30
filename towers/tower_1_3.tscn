@@ -4,11 +4,12 @@
 [ext_resource type="Texture2D" uid="uid://cqnor2jm1evmm" path="res://png/towers_png/tower1_3.png" id="2_v6hok"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_clgic"]
-radius = 103.019
+radius = 300.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t0ssf"]
 
 [node name="tower1_3" type="StaticBody2D"]
+z_index = 1
 script = ExtResource("1_o0pib")
 
 [node name="tower_area" type="Area2D" parent="."]
@@ -24,19 +25,14 @@ disabled = true
 [node name="tower" type="Node2D" parent="."]
 
 [node name="tower" type="Sprite2D" parent="tower"]
-position = Vector2(8.5, 0)
+position = Vector2(10, 0)
 texture = ExtResource("2_v6hok")
 
-[node name="aim1" type="Marker2D" parent="tower/tower"]
-position = Vector2(3.5, -4)
-
-[node name="aim2" type="Marker2D" parent="tower/tower"]
-position = Vector2(3.5, 0)
-
-[node name="aim3" type="Marker2D" parent="tower/tower"]
-position = Vector2(3.5, 4)
+[node name="aim" type="Marker2D" parent="tower/tower"]
+position = Vector2(13, 0)
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
 autostart = true
 
 [connection signal="area_entered" from="tower_area" to="." method="_on_tower_area_area_entered"]

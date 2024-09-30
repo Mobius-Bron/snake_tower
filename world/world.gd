@@ -14,11 +14,12 @@ var tower1_3 = preload("res://towers/tower_1_3.tscn")
 var enemy = preload("res://enemy/enemy.tscn")
 
 var game_start = 1
-var coin:int = 0
+var coin:int = 100
 var score:int = 0
 
 func add_new_enemy():
 	var new_enemy = enemy.instantiate()
+	new_enemy.set_rand_color()
 	var pos_kind = randi_range(1,4)
 	var x1
 	var x2
@@ -89,26 +90,21 @@ func _process(_delta):
 		if Input.is_action_pressed("ui_left") and snake_hand.dir != Vector2.RIGHT:
 			snake_hand.dir = Vector2.LEFT
 	
-	if Input.is_action_just_pressed("add_null"):
-		coin += 25
-		score += 5
-		add_body()
 	if Input.is_action_just_pressed("add_1"):
-		if coin >= 30:
+		if coin >= 15:
 			add_body(tower1_1)
-			score += 10
-			coin -= 30
+			score += 5
+			coin -= 15
 	if Input.is_action_just_pressed("add_2"):
-		if coin >= 60:
+		if coin >= 25:
 			add_body(tower1_2)
-			score += 15
-			coin -= 60
+			score += 5
+			coin -= 25
 	if Input.is_action_just_pressed("add_3"):
-		if coin >= 80:
+		if coin >= 30:
 			add_body(tower1_3)
-			score += 20
-			coin -= 80
-	
+			score += 5
+			coin -= 30
 
 func add_body(tower = null):
 	var new_body = snakeBody.instantiate()
@@ -124,7 +120,7 @@ func add_body(tower = null):
 	add_child(new_body)
 
 func reset():
-	coin = 0
+	coin = 100
 	score = 0
 	clear_snake(snake_hand)
 	snake_hand = null
@@ -142,25 +138,25 @@ func _on_enemy_timer_timeout():
 	add_new_enemy()
 	$enemy_timer.wait_time = randf_range(0.5, 3)
 
-func _on_add_null_button_down():
-	coin += 25
-	score += 5
-	add_body()
-
 func _on_add_tower_1_button_down():
-	if coin >= 30:
+	if coin >= 15:
 		add_body(tower1_1)
-		score += 10
-		coin -= 30
+		score += 5
+		coin -= 15
 
 func _on_add_tower_2_button_down():
-	if coin >= 60:
+	if coin >= 25:
 		add_body(tower1_2)
-		score += 15
-		coin -= 60
+		score += 5
+		coin -= 25
 
 func _on_add_tower_3_button_down():
-	if coin >= 80:
+	if coin >= 30:
 		add_body(tower1_3)
-		score += 20
-		coin -= 80
+		score += 5
+		coin -= 30
+
+func enemy_dead():
+	coin += 5
+	score += 5
+	add_body()

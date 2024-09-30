@@ -12,7 +12,7 @@ size = Vector2(6, 6)
 [node name="bullet" type="CharacterBody2D"]
 script = ExtResource("1_x4oyy")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="png" type="Sprite2D" parent="."]
 modulate = Color(1, 0, 0, 1)
 texture = ExtResource("2_rk547")
 region_enabled = true

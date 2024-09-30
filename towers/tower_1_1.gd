@@ -35,4 +35,5 @@ func _on_timer_timeout():
 		var new_bullet = bullet.instantiate()
 		new_bullet.global_position = $tower/tower/aim.global_position
 		new_bullet.target = target_enemy
+		new_bullet.atk = 1
 		get_tree().get_root().add_child(new_bullet)

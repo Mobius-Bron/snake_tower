@@ -9,7 +9,7 @@ func get_v():
 	dir = dir.normalized()
 	return dir * speed
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	look_at(target_position)
 	velocity = get_v()
 	move_and_slide()
@@ -19,5 +19,8 @@ func _physics_process(delta):
 func hurt(_atk):
 	hp -= _atk
 	if hp <= 0:
-		get_parent().score += 5
+		get_parent().enemy_dead()
 		queue_free()
+
+func set_rand_color():
+	$png.modulate = Color8(randi_range(1,255),randi_range(1,255),randi_range(1,255))

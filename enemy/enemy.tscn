@@ -21,7 +21,7 @@ shape = SubResource("RectangleShape2D_v3l28")
 shape = SubResource("RectangleShape2D_2u0kw")
 disabled = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="png" type="Sprite2D" parent="."]
 z_index = 3
 position = Vector2(2, 0)
 texture = ExtResource("1_66b0p")
