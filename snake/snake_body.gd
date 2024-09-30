@@ -8,35 +8,17 @@ var preBody = null #上一个身体部分
 var nextPoint = null
 var lastPoint = null
 
-func _ready():
-	if isHead():
-		while 1:
-			if nextPoint:
-				lastPoint = nextPoint
-			else:
-				lastPoint = self.global_position
-			nextPoint = self.global_position + dir*17
-			setNextPoint(nextBody)
-			await get_tree().create_timer(0.1).timeout
-
-func isHead():
-	return preBody == null
-
-func _physics_process(delta):
+func _physics_process(_delta):
 	if nextPoint:
-		if isHead():
-			var d = nextPoint - self.global_position
-			d.normalized()
-			velocity = d * moveSpeed / 5
-		else:
-			dir = nextPoint - self.global_position
-			dir.normalized()
-			velocity = dir * moveSpeed / 5
+		dir = nextPoint - self.global_position
+		dir.normalized()
+		velocity = dir * moveSpeed
+	else:
+		velocity = Vector2.ZERO
 	move_and_slide()
 
-func setNextPoint(x):
-	if x == null:
-		return
-	x.lastPoint = x.nextPoint
-	x.nextPoint = x.preBody.lastPoint
-	setNextPoint(x.nextBody)
+func add_tower(tower):
+	var new_tower = tower.instantiate()
+	new_tower.position = Vector2.ZERO
+	add_child(new_tower)
+

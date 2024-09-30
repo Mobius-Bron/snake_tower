@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://b22rdntobh3tt"]
+
+[ext_resource type="Script" path="res://snake/snake_hand.gd" id="1_rpp72"]
+[ext_resource type="Texture2D" uid="uid://vbxiiwfyjqiq" path="res://png/蛇头.png" id="2_8v4ol"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p0v51"]
+size = Vector2(17, 17)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wj7ww"]
+size = Vector2(5, 15)
+
+[node name="snake_hand" type="CharacterBody2D"]
+scale = Vector2(2, 2)
+script = ExtResource("1_rpp72")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_8v4ol")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_p0v51")
+disabled = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+
+[node name="hand_area" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hand_area"]
+position = Vector2(6, 0)
+shape = SubResource("RectangleShape2D_wj7ww")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="hand_area" to="." method="_on_hand_area_area_entered"]
