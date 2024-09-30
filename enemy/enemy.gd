@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-var hp: = 50
+var hp: = 30
 var speed = 80
 var target_position: Vector2
 

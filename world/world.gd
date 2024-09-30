@@ -8,10 +8,13 @@ var snake_tail
 var snake_tail_
 
 var tower1_1 = preload("res://towers/tower_1_1.tscn")
+var tower1_2 = preload("res://towers/tower_1_2.tscn")
+var tower1_3 = preload("res://towers/tower_1_3.tscn")
 
 var enemy = preload("res://enemy/enemy.tscn")
 
 var game_start = 1
+var coin:int = 0
 
 func add_new_enemy():
 	var new_enemy = enemy.instantiate()
@@ -21,13 +24,13 @@ func add_new_enemy():
 	var y1
 	var y2
 	if pos_kind == 1:
-		x1 = randf_range(-700, 700)
-		x2 = randf_range(-700, 700)
+		x1 = randf_range(-600, 600)
+		x2 = randf_range(-600, 600)
 		y1 = -400
 		y2 = 400
 	elif pos_kind == 2:
-		x1 = randf_range(-700, 700)
-		x2 = randf_range(-700, 700)
+		x1 = randf_range(-600, 600)
+		x2 = randf_range(-600, 600)
 		y1 = 400
 		y2 = -400
 	elif pos_kind == 3:
@@ -67,11 +70,7 @@ func create_new_snake():
 	add_child(snake_tail)
 
 func _process(_delta):
-	if Input.is_action_just_pressed("reset_test"):
-		reset()
-		await get_tree().create_timer(0.1).timeout
-		reset()
-
+	$snake_body_shop/coin_num.text = "金币数量："+str(coin)
 	if snakeHand != null:
 		if snake_hand.game_over:
 			reset()
@@ -84,9 +83,6 @@ func _process(_delta):
 			snake_hand.dir = Vector2.RIGHT
 		if Input.is_action_pressed("ui_left") and snake_hand.dir != Vector2.RIGHT:
 			snake_hand.dir = Vector2.LEFT
-		
-		if Input.is_action_just_pressed("add_body_test"):
-			add_body(tower1_1)
 
 func add_body(tower = null):
 	var new_body = snakeBody.instantiate()
@@ -102,6 +98,7 @@ func add_body(tower = null):
 	add_child(new_body)
 
 func reset():
+	coin = 0
 	clear_snake(snake_hand)
 	snake_hand = null
 	create_new_snake()
@@ -117,3 +114,22 @@ func clear_snake(x):
 func _on_enemy_timer_timeout():
 	add_new_enemy()
 	$enemy_timer.wait_time = randf_range(0.5, 3)
+
+func _on_add_null_button_down():
+	coin += 25
+	add_body()
+
+func _on_add_tower_1_button_down():
+	if coin >= 30:
+		add_body(tower1_1)
+		coin -= 30
+
+func _on_add_tower_2_button_down():
+	if coin >= 60:
+		add_body(tower1_2)
+		coin -= 60
+
+func _on_add_tower_3_button_down():
+	if coin >= 80:
+		add_body(tower1_3)
+		coin -= 80
