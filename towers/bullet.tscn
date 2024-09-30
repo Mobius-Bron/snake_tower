@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://ck3lgaoyr0l01"]
 
 [ext_resource type="Script" path="res://towers/bullet.gd" id="1_x4oyy"]
-[ext_resource type="Texture2D" uid="uid://d1lg5kgjlan4o" path="res://png/蛇身体.png" id="2_ewutd"]
+[ext_resource type="Texture2D" uid="uid://vbxiiwfyjqiq" path="res://png/蛇头.png" id="2_rk547"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7luie"]
 size = Vector2(2, 2)
@@ -13,10 +13,10 @@ size = Vector2(6, 6)
 script = ExtResource("1_x4oyy")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(1, 0.584314, 1, 1)
-texture = ExtResource("2_ewutd")
+modulate = Color(1, 0, 0, 1)
+texture = ExtResource("2_rk547")
 region_enabled = true
-region_rect = Rect2(6, 6, 5, 5)
+region_rect = Rect2(12, 7, 4, 3)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_7luie")

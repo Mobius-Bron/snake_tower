@@ -19,4 +19,5 @@ func _physics_process(delta):
 func hurt(_atk):
 	hp -= _atk
 	if hp <= 0:
+		get_parent().score += 5
 		queue_free()

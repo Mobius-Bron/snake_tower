@@ -64,50 +64,58 @@ autostart = true
 
 [node name="snake_body_shop" type="Node2D" parent="."]
 z_index = 4
-position = Vector2(682, -201)
+position = Vector2(681, -248)
 
 [node name="ColorRect" type="ColorRect" parent="snake_body_shop"]
-offset_right = 200.0
-offset_bottom = 400.0
+offset_left = -1.0
+offset_right = 199.0
+offset_bottom = 420.0
 color = Color(0.513726, 0.717647, 0.372549, 1)
 
+[node name="score_num" type="Label" parent="snake_body_shop"]
+offset_left = 19.0
+offset_top = 27.0
+offset_right = 99.0
+offset_bottom = 50.0
+text = "当前分数："
+
 [node name="coin_num" type="Label" parent="snake_body_shop"]
-offset_left = 35.0
-offset_top = 20.0
-offset_right = 115.0
-offset_bottom = 43.0
+offset_left = 19.0
+offset_top = 71.0
+offset_right = 99.0
+offset_bottom = 94.0
 text = "金币数量："
 
 [node name="add_null" type="Button" parent="snake_body_shop"]
-offset_left = 39.0
-offset_top = 65.0
-offset_right = 159.0
-offset_bottom = 118.0
-text = "添加一个空节点
+offset_left = 19.0
+offset_top = 122.0
+offset_right = 139.0
+offset_bottom = 175.0
+text = "添加一个空节点 (H)
 金币+25"
 
 [node name="add_tower1" type="Button" parent="snake_body_shop"]
-offset_left = 39.0
-offset_top = 138.0
-offset_right = 159.0
-offset_bottom = 191.0
-text = "添加单管防御塔
+offset_left = 19.0
+offset_top = 195.0
+offset_right = 139.0
+offset_bottom = 248.0
+text = "添加单管防御塔  ( J)
 金币-30"
 
 [node name="add_tower2" type="Button" parent="snake_body_shop"]
-offset_left = 39.0
-offset_top = 211.0
-offset_right = 159.0
-offset_bottom = 264.0
-text = "添加双管防御塔
+offset_left = 19.0
+offset_top = 268.0
+offset_right = 168.0
+offset_bottom = 322.0
+text = "添加双管防御塔  (K)
 金币-60"
 
 [node name="add_tower3" type="Button" parent="snake_body_shop"]
-offset_left = 39.0
-offset_top = 284.0
-offset_right = 159.0
-offset_bottom = 337.0
-text = "添加单管防御塔
+offset_left = 19.0
+offset_top = 341.0
+offset_right = 139.0
+offset_bottom = 394.0
+text = "添加三管防御塔  (K)
 金币-80"
 
 [connection signal="timeout" from="enemy_timer" to="." method="_on_enemy_timer_timeout"]

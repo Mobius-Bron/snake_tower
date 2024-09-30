@@ -7,9 +7,9 @@
 size = Vector2(17, 17)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wj7ww"]
-size = Vector2(5, 9)
+size = Vector2(4, 5)
 
-[node name="snake_hand" type="CharacterBody2D"]
+[node name="snake_head" type="CharacterBody2D"]
 scale = Vector2(2, 2)
 script = ExtResource("1_rpp72")
 
@@ -27,7 +27,7 @@ autostart = true
 [node name="hand_area" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hand_area"]
-position = Vector2(6, 0)
+position = Vector2(6.5, 0)
 shape = SubResource("RectangleShape2D_wj7ww")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

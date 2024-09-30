@@ -17,6 +17,8 @@ func _physics_process(_delta):
 		d = nextPoint - self.global_position
 		d.normalized()
 		velocity = d * moveSpeed
+	else:
+		velocity = Vector2.ZERO
 	move_and_slide()
 
 func setNextPoint(x):

@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var moveSpeed: float = 15
+@export var moveSpeed: float = 12
 var snakeHand = preload("res://snake/snake_hand.tscn")
 var snakeBody = preload("res://snake/snake_body.tscn")
 var snake_hand
@@ -15,6 +15,7 @@ var enemy = preload("res://enemy/enemy.tscn")
 
 var game_start = 1
 var coin:int = 0
+var score:int = 0
 
 func add_new_enemy():
 	var new_enemy = enemy.instantiate()
@@ -59,7 +60,9 @@ func create_new_snake():
 	snake_tail.global_position = Vector2(-34,0)
 	
 	snake_hand.moveSpeed = moveSpeed
+	snake_hand.lastPoint = Vector2(0,0)
 	snake_tail.moveSpeed = moveSpeed
+	snake_tail.lastPoint = Vector2(-34,0)
 	
 	snake_hand.nextBody = snake_tail
 	snake_tail.preBody = snake_hand
@@ -70,11 +73,13 @@ func create_new_snake():
 	add_child(snake_tail)
 
 func _process(_delta):
+	$snake_body_shop/score_num.text = "当前分数："+str(score)
 	$snake_body_shop/coin_num.text = "金币数量："+str(coin)
+	
 	if snakeHand != null:
 		if snake_hand.game_over:
 			reset()
-		
+			
 		if Input.is_action_pressed("ui_up") and snake_hand.dir != Vector2.DOWN:
 			snake_hand.dir = Vector2.UP
 		if Input.is_action_pressed("ui_down") and snake_hand.dir != Vector2.UP:
@@ -83,6 +88,27 @@ func _process(_delta):
 			snake_hand.dir = Vector2.RIGHT
 		if Input.is_action_pressed("ui_left") and snake_hand.dir != Vector2.RIGHT:
 			snake_hand.dir = Vector2.LEFT
+	
+	if Input.is_action_just_pressed("add_null"):
+		coin += 25
+		score += 5
+		add_body()
+	if Input.is_action_just_pressed("add_1"):
+		if coin >= 30:
+			add_body(tower1_1)
+			score += 10
+			coin -= 30
+	if Input.is_action_just_pressed("add_2"):
+		if coin >= 60:
+			add_body(tower1_2)
+			score += 15
+			coin -= 60
+	if Input.is_action_just_pressed("add_3"):
+		if coin >= 80:
+			add_body(tower1_3)
+			score += 20
+			coin -= 80
+	
 
 func add_body(tower = null):
 	var new_body = snakeBody.instantiate()
@@ -99,6 +125,7 @@ func add_body(tower = null):
 
 func reset():
 	coin = 0
+	score = 0
 	clear_snake(snake_hand)
 	snake_hand = null
 	create_new_snake()
@@ -117,19 +144,23 @@ func _on_enemy_timer_timeout():
 
 func _on_add_null_button_down():
 	coin += 25
+	score += 5
 	add_body()
 
 func _on_add_tower_1_button_down():
 	if coin >= 30:
 		add_body(tower1_1)
+		score += 10
 		coin -= 30
 
 func _on_add_tower_2_button_down():
 	if coin >= 60:
 		add_body(tower1_2)
+		score += 15
 		coin -= 60
 
 func _on_add_tower_3_button_down():
 	if coin >= 80:
 		add_body(tower1_3)
+		score += 20
 		coin -= 80
