@@ -7,7 +7,7 @@
 size = Vector2(17, 17)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wj7ww"]
-size = Vector2(5, 15)
+size = Vector2(5, 9)
 
 [node name="snake_hand" type="CharacterBody2D"]
 scale = Vector2(2, 2)

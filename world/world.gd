@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var moveSpeed: float = 10
+@export var moveSpeed: float = 15
 var snakeHand = preload("res://snake/snake_hand.tscn")
 var snakeBody = preload("res://snake/snake_body.tscn")
 var snake_hand
@@ -37,7 +37,7 @@ func _process(_delta):
 		reset()
 		await get_tree().create_timer(0.1).timeout
 		reset()
-	
+
 	if snakeHand != null:
 		if snake_hand.game_over:
 			reset()
@@ -53,7 +53,7 @@ func _process(_delta):
 		
 		if Input.is_action_just_pressed("add_body_test"):
 			add_body(tower1_1)
-		
+
 func add_body(tower = null):
 	var new_body = snakeBody.instantiate()
 	new_body.preBody = snake_tail_
