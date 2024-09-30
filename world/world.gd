@@ -7,12 +7,46 @@ var snake_hand
 var snake_tail
 var snake_tail_
 
-var tower1_1 = preload("res://tower_1_1.tscn")
+var tower1_1 = preload("res://towers/tower_1_1.tscn")
+
+var enemy = preload("res://enemy/enemy.tscn")
 
 var game_start = 1
 
+func add_new_enemy():
+	var new_enemy = enemy.instantiate()
+	var pos_kind = randi_range(1,4)
+	var x1
+	var x2
+	var y1
+	var y2
+	if pos_kind == 1:
+		x1 = randf_range(-700, 700)
+		x2 = randf_range(-700, 700)
+		y1 = -400
+		y2 = 400
+	elif pos_kind == 2:
+		x1 = randf_range(-700, 700)
+		x2 = randf_range(-700, 700)
+		y1 = 400
+		y2 = -400
+	elif pos_kind == 3:
+		x1 = -800
+		x2 = 800
+		y1 = randf_range(-300, 300)
+		y2 = randf_range(-300, 300)
+	elif pos_kind == 4:
+		x1 = 800
+		x2 = -800
+		y1 = randf_range(-300, 300)
+		y2 = randf_range(-300, 300)
+	new_enemy.global_position = Vector2(x1,y1)
+	new_enemy.target_position = Vector2(x2,y2)
+	add_child(new_enemy)
+
 func _ready():
 	create_new_snake()
+	add_new_enemy()
 
 func create_new_snake():
 	snake_hand = snakeHand.instantiate()
@@ -80,4 +114,6 @@ func clear_snake(x):
 		node.queue_free()
 		node = node_
 
-
+func _on_enemy_timer_timeout():
+	add_new_enemy()
+	$enemy_timer.wait_time = randf_range(0.5, 3)

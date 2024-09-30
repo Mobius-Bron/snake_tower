@@ -56,3 +56,8 @@ shape = SubResource("RectangleShape2D_5cudl")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 rotation_smoothing_enabled = true
+
+[node name="enemy_timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="enemy_timer" to="." method="_on_enemy_timer_timeout"]

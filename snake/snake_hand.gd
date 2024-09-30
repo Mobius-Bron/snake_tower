@@ -40,4 +40,5 @@ func _on_timer_timeout():
 	setNextPoint(nextBody)
 
 func _on_hand_area_area_entered(area):
-	game_over = 1
+	if area.name == "world_area" or area.name == "snake_area":
+		game_over = 1

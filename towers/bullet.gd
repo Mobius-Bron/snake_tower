@@ -1,0 +1,22 @@
+extends CharacterBody2D
+
+var atk = 3
+var speed = 200
+var dir = Vector2.RIGHT
+var target
+
+func _physics_process(delta):
+	if target != null:
+		look_at(target.global_position)
+		dir = target.global_position - self.global_position
+		dir = dir.normalized()
+	velocity = dir * speed
+	move_and_slide()
+
+func _on_area_2d_area_entered(area):
+	if area.name == "enemy_area":
+		var node = area.get_parent()
+		node.hurt(atk)
+		queue_free()
+	elif area.name == "world_area":
+		queue_free()

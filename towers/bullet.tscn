@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://ck3lgaoyr0l01"]
+
+[ext_resource type="Script" path="res://towers/bullet.gd" id="1_x4oyy"]
+[ext_resource type="Texture2D" uid="uid://d1lg5kgjlan4o" path="res://png/蛇身体.png" id="2_ewutd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7luie"]
+size = Vector2(2, 2)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_td1s8"]
+size = Vector2(6, 6)
+
+[node name="bullet" type="CharacterBody2D"]
+script = ExtResource("1_x4oyy")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.584314, 1, 1)
+texture = ExtResource("2_ewutd")
+region_enabled = true
+region_rect = Rect2(6, 6, 5, 5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_7luie")
+disabled = true
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
+z_index = 2
+shape = SubResource("RectangleShape2D_td1s8")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

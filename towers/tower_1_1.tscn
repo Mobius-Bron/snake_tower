@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://xlqy1rlsoavr"]
+
+[ext_resource type="Texture2D" uid="uid://d1r3ckv58jfau" path="res://png/towers_png/tower1_1.png" id="1_085af"]
+[ext_resource type="Script" path="res://towers/tower_1_1.gd" id="1_afrnp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1mb05"]
+radius = 103.019
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0krnr"]
+
+[node name="tower1_1" type="StaticBody2D"]
+script = ExtResource("1_afrnp")
+
+[node name="tower_area" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="tower_area"]
+shape = SubResource("CircleShape2D_1mb05")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_0krnr")
+disabled = true
+
+[node name="tower" type="Node2D" parent="."]
+
+[node name="tower" type="Sprite2D" parent="tower"]
+position = Vector2(8.5, 0)
+texture = ExtResource("1_085af")
+
+[node name="aim" type="Marker2D" parent="tower/tower"]
+position = Vector2(4.5, 0)
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="area_entered" from="tower_area" to="." method="_on_tower_area_area_entered"]
+[connection signal="area_exited" from="tower_area" to="." method="_on_tower_area_area_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
