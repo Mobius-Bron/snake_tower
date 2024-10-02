@@ -1,38 +1,36 @@
-[gd_scene load_steps=5 format=3 uid="uid://ctv8ujgb13fjf"]
+[gd_scene load_steps=5 format=3 uid="uid://c603vr56n27p4"]
 
-[ext_resource type="Script" path="res://towers/tower_1_3.gd" id="1_o0pib"]
-[ext_resource type="Texture2D" uid="uid://cqnor2jm1evmm" path="res://png/towers_png/tower1_3.png" id="2_v6hok"]
+[ext_resource type="Script" path="res://towers/tower_1_4.gd" id="1_kka8j"]
+[ext_resource type="Texture2D" uid="uid://5sxmf6ivokgl" path="res://png/towers_png/tower1_4.png" id="1_viav5"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_clgic"]
-radius = 300.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_xwlbe"]
+radius = 150.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_t0ssf"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nhkv5"]
 
-[node name="tower1_3" type="StaticBody2D"]
-z_index = 1
-script = ExtResource("1_o0pib")
+[node name="tower1_4" type="StaticBody2D"]
+script = ExtResource("1_kka8j")
 
 [node name="tower_area" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="tower_area"]
 position = Vector2(-3, 0)
-shape = SubResource("CircleShape2D_clgic")
+shape = SubResource("CircleShape2D_xwlbe")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_t0ssf")
+shape = SubResource("RectangleShape2D_nhkv5")
 disabled = true
 
 [node name="tower" type="Node2D" parent="."]
 
 [node name="tower" type="Sprite2D" parent="tower"]
-position = Vector2(10, 0)
-texture = ExtResource("2_v6hok")
+position = Vector2(11, 0)
+texture = ExtResource("1_viav5")
 
 [node name="aim" type="Marker2D" parent="tower/tower"]
-position = Vector2(13, 0)
+position = Vector2(7, 0)
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 8.0
 autostart = true
 
 [connection signal="area_entered" from="tower_area" to="." method="_on_tower_area_area_entered"]

@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var moveSpeed: float = 12
+@export var moveSpeed: float = 15
 var snakeHand = preload("res://snake/snake_hand.tscn")
 var snakeBody = preload("res://snake/snake_body.tscn")
 var snake_hand
@@ -10,12 +10,19 @@ var snake_tail_
 var tower1_1 = preload("res://towers/tower_1_1.tscn")
 var tower1_2 = preload("res://towers/tower_1_2.tscn")
 var tower1_3 = preload("res://towers/tower_1_3.tscn")
+var tower1_4 = preload("res://towers/tower_1_4.tscn")
 
 var enemy = preload("res://enemy/enemy.tscn")
 
 var game_start = 1
 var coin:int = 100
 var score:int = 0
+var max_score:int = 0
+
+var snakePoint: Vector2
+
+var max_time = 3.0
+var mix_time = 1.0
 
 func add_new_enemy():
 	var new_enemy = enemy.instantiate()
@@ -47,11 +54,13 @@ func add_new_enemy():
 		y2 = randf_range(-300, 300)
 	new_enemy.global_position = Vector2(x1,y1)
 	new_enemy.target_position = Vector2(x2,y2)
+	new_enemy.hp = randi_range(20, 100)
 	add_child(new_enemy)
 
 func _ready():
+	load_game()
+	$snake_body_shop/max_score.text = "最高分数：" + str(max_score)
 	create_new_snake()
-	add_new_enemy()
 
 func create_new_snake():
 	snake_hand = snakeHand.instantiate()
@@ -80,15 +89,23 @@ func _process(_delta):
 	if snakeHand != null:
 		if snake_hand.game_over:
 			reset()
-			
-		if Input.is_action_pressed("ui_up") and snake_hand.dir != Vector2.DOWN:
+		
+		if snake_hand.nextPoint:
+			snakePoint = snake_hand.nextPoint - snake_hand.lastPoint
+			snakePoint = snakePoint.normalized()
+		else:
+			snakePoint = Vector2.RIGHT
+		
+		
+		if Input.is_action_pressed("ui_up") and snakePoint != Vector2.DOWN:
 			snake_hand.dir = Vector2.UP
-		if Input.is_action_pressed("ui_down") and snake_hand.dir != Vector2.UP:
+		elif Input.is_action_pressed("ui_down") and snakePoint != Vector2.UP:
 			snake_hand.dir = Vector2.DOWN
-		if Input.is_action_pressed("ui_right") and snake_hand.dir != Vector2.LEFT:
+		elif Input.is_action_pressed("ui_right") and snakePoint != Vector2.LEFT:
 			snake_hand.dir = Vector2.RIGHT
-		if Input.is_action_pressed("ui_left") and snake_hand.dir != Vector2.RIGHT:
+		elif Input.is_action_pressed("ui_left") and snakePoint != Vector2.RIGHT:
 			snake_hand.dir = Vector2.LEFT
+			
 	
 	if Input.is_action_just_pressed("add_1"):
 		if coin >= 15:
@@ -105,6 +122,11 @@ func _process(_delta):
 			add_body(tower1_3)
 			score += 5
 			coin -= 30
+	if Input.is_action_just_pressed("add_4"):
+		if coin >= 20:
+			add_body(tower1_4)
+			score += 5
+			coin -= 20
 
 func add_body(tower = null):
 	var new_body = snakeBody.instantiate()
@@ -120,7 +142,13 @@ func add_body(tower = null):
 	add_child(new_body)
 
 func reset():
+	mix_time = 1.0
+	max_time = 3.0
 	coin = 100
+	if score > max_score:
+		max_score = score
+		save_game()
+		$snake_body_shop/max_score.text = "最高分数：" + str(max_score)
 	score = 0
 	clear_snake(snake_hand)
 	snake_hand = null
@@ -136,7 +164,7 @@ func clear_snake(x):
 
 func _on_enemy_timer_timeout():
 	add_new_enemy()
-	$enemy_timer.wait_time = randf_range(0.5, 3)
+	$enemy_timer.wait_time = randf_range(mix_time, max_time)
 
 func _on_add_tower_1_button_down():
 	if coin >= 15:
@@ -156,7 +184,41 @@ func _on_add_tower_3_button_down():
 		score += 5
 		coin -= 30
 
+func _on_add_tower_4_button_down():
+	if coin >= 20:
+		add_body(tower1_4)
+		score += 5
+		coin -= 20
+
 func enemy_dead():
 	coin += 5
 	score += 5
+	if score >= 1500:
+		mix_time = 0.03
+		max_time = 0.1
+	elif score >= 1000:
+		mix_time = 0.1
+		max_time = 0.3
+	elif score >= 800:
+		mix_time = 0.1
+		max_time = 0.3
+	elif score >= 600:
+		mix_time = 0.3
+		max_time = 1.0
+	elif score >= 800:
+		mix_time = 0.5
+		max_time = 1.5
+	elif score >= 200:
+		mix_time = 0.5
+		max_time = 2.5
 	add_body()
+
+func save_game():
+	var file = FileAccess.open("res://save_max_score.data", FileAccess.WRITE)
+	file.store_var(max_score)
+	file.close()
+
+func load_game():
+	var file = FileAccess.open("res://save_max_score.data", FileAccess.READ)
+	max_score = file.get_var()
+	file.close()
