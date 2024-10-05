@@ -23,6 +23,8 @@ var snakePoint: Vector2
 
 var max_time = 3.0
 var mix_time = 1.0
+var mix_hp = 20;
+var max_hp = 100;
 
 func add_new_enemy():
 	var new_enemy = enemy.instantiate()
@@ -54,7 +56,7 @@ func add_new_enemy():
 		y2 = randf_range(-300, 300)
 	new_enemy.global_position = Vector2(x1,y1)
 	new_enemy.target_position = Vector2(x2,y2)
-	new_enemy.hp = randi_range(20, 100)
+	new_enemy.hp = randi_range(mix_hp, max_hp)
 	add_child(new_enemy)
 
 func _ready():
@@ -144,6 +146,8 @@ func add_body(tower = null):
 func reset():
 	mix_time = 1.0
 	max_time = 3.0
+	mix_hp = 20
+	max_hp = 100
 	coin = 100
 	if score > max_score:
 		max_score = score
@@ -196,22 +200,33 @@ func enemy_dead():
 	if score >= 1500:
 		mix_time = 0.03
 		max_time = 0.1
+		mix_hp = 600
+		max_hp = 1000
 	elif score >= 1000:
 		mix_time = 0.1
 		max_time = 0.3
+		mix_hp = 500
+		max_hp = 800
 	elif score >= 800:
 		mix_time = 0.1
 		max_time = 0.3
+		mix_hp = 400
+		max_hp = 600
 	elif score >= 600:
 		mix_time = 0.3
 		max_time = 1.0
+		mix_hp = 250
+		max_hp = 400
 	elif score >= 800:
 		mix_time = 0.5
 		max_time = 1.5
+		mix_hp = 100
+		max_hp = 300
 	elif score >= 200:
 		mix_time = 0.5
 		max_time = 2.5
-	add_body()
+		mix_hp = 50
+		max_hp = 200
 
 func save_game():
 	var file = FileAccess.open("res://save_max_score.data", FileAccess.WRITE)
